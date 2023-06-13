@@ -14,7 +14,7 @@ st.subheader('''
 
 I'm here to assist you in exploring our wide range of subscription management products. Whether you're looking for billing solutions or subscription analytics, I've got you covered.
 
-Simply type your questions or preferences, and I'll provide you with information on how our products can help streamline your subscription-based business.
+Simply type your questions or preferences, and I'll provide you with information on how our products can help streamline your subscription-based business..
 
 Let's get started! How can I assist you today? 😊
 ''')
