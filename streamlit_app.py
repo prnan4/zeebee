@@ -1,6 +1,7 @@
 import streamlit as st
 from langchain.llms import OpenAI
 from langchain.prompts import PromptTemplate
+import toml
 
 import requests
 from bs4 import BeautifulSoup
@@ -21,6 +22,9 @@ Let's get started! How can I assist you today? 😊
              
 #openai_api_key = st.sidebar.text_input('OpenAI API Key')
 #openai_api_key = "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"
+
+secrets = st.secrets["secrets"]
+openai_api_key = secrets["openai_api_key"]
 
 def generate_response(question):
     llm = OpenAI(temperature=0.5, openai_api_key=openai_api_key)
