@@ -14,14 +14,14 @@ st.subheader('''
 
 I'm here to assist you in exploring our wide range of subscription management products. Whether you're looking for billing solutions or subscription analytics, I've got you covered.
 
-Simply type your questions or preferences, and I'll provide you with information on how our products can help streamline your subscription-based business..
+Simply type your questions or preferences, and I'll provide you with information on how our products can help streamline your subscription-based business.
 
 Let's get started! How can I assist you today? 😊
 ''')
              
 #openai_api_key = st.sidebar.text_input('OpenAI API Key')
 
-openai_api_key = "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"
+openai_api_key = "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"
 
 def generate_response(question):
     llm = OpenAI(temperature=0.5, openai_api_key=openai_api_key)
