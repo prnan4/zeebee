@@ -21,10 +21,9 @@ Let's get started! How can I assist you today? 😊
 ''')
              
 #openai_api_key = st.sidebar.text_input('OpenAI API Key')
-openai_api_key = "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"
 
-# secrets = st.secrets["secrets"]
-# openai_api_key = secrets["openai_api_key"]
+secrets = st.secrets["secrets"]
+openai_api_key = secrets["openai_api_key"]
 
 def generate_response(question):
     llm = OpenAI(temperature=0.5, openai_api_key=openai_api_key)
