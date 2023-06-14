@@ -3,3 +3,4 @@ openai
 streamlit
 bs4
 requests
+streamlit_chat

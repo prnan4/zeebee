@@ -21,10 +21,10 @@ Let's get started! How can I assist you today? 😊
 ''')
              
 #openai_api_key = st.sidebar.text_input('OpenAI API Key')
-#openai_api_key = "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"
+openai_api_key = "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"
 
-secrets = st.secrets["secrets"]
-openai_api_key = secrets["openai_api_key"]
+# secrets = st.secrets["secrets"]
+# openai_api_key = secrets["openai_api_key"]
 
 def generate_response(question):
     llm = OpenAI(temperature=0.5, openai_api_key=openai_api_key)
@@ -77,13 +77,12 @@ with st.form('my_form'):
         elif context_type == 'Zuora Context added':
             generate_response_with_context(text)
 
-    feedback = st.text_input('Feedback', '')
+    context_type = st.selectbox('Rate the response', ['Excellent', 'Good', 'Poor'])
+    feedback = st.text_input('More Comments', '')
     
     # Feedback is displayed in app. Need to modify logic to store feedback to databaset
     feedback_submitted = st.form_submit_button('Submit Feedback')
+
     if feedback_submitted:
       st.subheader('Feedback:')
       st.write(feedback)
-
-    context_type = st.selectbox('Rate the response', ['Excellent', 'Very Good', 'Good', 'Fair', 'Poor'])
-    submitted = st.form_submit_button('Submit Rating')
