@@ -36,8 +36,13 @@ if "messages" not in st.session_state:
     ]
 
 
-# sidebar with user input
-with st.sidebar:
+# container for chat history
+response_container = st.container()
+# container for text box
+container = st.container()
+
+with container:
+
     user_input = st.text_input("Your question: ", key="user_input")
 
     # handle user input
@@ -47,14 +52,14 @@ with st.sidebar:
             response = chat(st.session_state.messages)
         st.session_state.messages.append(AIMessage(content=response.content))
 
-
-# display message history
-messages = st.session_state.get('messages', [])
-for i, msg in enumerate(messages[1:]):
-    if i % 2 == 0:
-        message(msg.content, is_user=True, key=str(i) + '_user')
-    else:
-        message(msg.content, is_user=False, key=str(i) + '_ai')
+with response_container:
+    # display message history
+    messages = st.session_state.get('messages', [])
+    for i, msg in enumerate(messages[1:]):
+        if i % 2 == 0:
+            message(msg.content, is_user=True, key=str(i) + '_user')
+        else:
+            message(msg.content, is_user=False, key=str(i) + '_ai')
 
 with st.form('my_form'):
     context_type = st.selectbox('Rate the response', ['Excellent', 'Good', 'Poor'])
