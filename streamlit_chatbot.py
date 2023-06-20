@@ -8,7 +8,7 @@ from langchain.schema import (
     AIMessage
 )
 
-# setup streamlit page
+# Set up the Streamlit app title and introductory message
 st.set_page_config(
     page_title="Zeebee",
     page_icon="🐝"
@@ -24,28 +24,29 @@ Simply type your questions or preferences, and I'll provide you with information
 Let's get started! How can I assist you today? 😊
 ''')
 
+
 secrets = st.secrets["secrets"]
 openai_api_key = secrets["openai_api_key"]
 
+# Initialize the OpenAI language model
 chat = ChatOpenAI(temperature=0, openai_api_key=openai_api_key)
 
-# initialize message history
+# Initialize message history
 if "messages" not in st.session_state:
     st.session_state.messages = [
         SystemMessage(content="You are a helpful assistant.")
     ]
 
-
-# container for chat history
+# Container for chat history
 response_container = st.container()
-# container for text box
+# Container for text box
 container = st.container()
 
 with container:
 
     user_input = st.text_input("Your question: ", key="user_input")
 
-    # handle user input
+    # Handle user input
     if user_input:
         st.session_state.messages.append(HumanMessage(content=user_input))
         with st.spinner("Thinking..."):
@@ -53,7 +54,7 @@ with container:
         st.session_state.messages.append(AIMessage(content=response.content))
 
 with response_container:
-    # display message history
+    # Display message history
     messages = st.session_state.get('messages', [])
     for i, msg in enumerate(messages[1:]):
         if i % 2 == 0:
