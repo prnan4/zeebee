@@ -23,8 +23,8 @@ Let's get started! How can I assist you today? 😊
 ''')
              
 # Read values from secrets.toml
-secrets = toml.load("secrets.toml")
-openai_api_key = secrets['secrets']['openai_api_key']
+secrets = st.secrets["secrets"]
+openai_api_key = secrets["openai_api_key"]
 
 # Initialize the OpenAI language model
 llm = OpenAI(temperature=0.5, openai_api_key=openai_api_key)
