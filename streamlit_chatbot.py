@@ -1,5 +1,6 @@
 import streamlit as st
 from streamlit_chat import message
+import toml
 
 from langchain.chat_models import ChatOpenAI
 from langchain.schema import (
@@ -24,9 +25,9 @@ Simply type your questions or preferences, and I'll provide you with information
 Let's get started! How can I assist you today? 😊
 ''')
 
-
-secrets = st.secrets["secrets"]
-openai_api_key = secrets["openai_api_key"]
+# Read values from secrets.toml
+secrets = toml.load("secrets.toml")
+openai_api_key = secrets['secrets']['openai_api_key']
 
 # Initialize the OpenAI language model
 chat = ChatOpenAI(temperature=0, openai_api_key=openai_api_key)
