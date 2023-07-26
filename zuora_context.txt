@@ -1,10 +1,5 @@
 Overview of customer accounts
-Save as PDF
  
-Customer Hierarchy 
-Reseller Account
-Importing Accounts
-Grouping Accounts for Batch Processing
 For each account, you can view the complete history of all subscriptions and amendments, transactions (including invoices, payments, refunds, credits, adjustments), and key metrics (for example, monthly recurring revenue) for that customer. Key actions can be easily launched from the Customer Accounts page, including the ability to cancel or delete a customer account, create new subscriptions, process payments and refunds, adjust invoice charges, and create invoice item adjustments. Many of these actions can be found by clicking on the more button on the customer account page.
 
 Customer Hierarchy 
@@ -40,10 +35,6 @@ Grouping Accounts for Batch Processing
 You can use Batches to easily group your customer accounts in order to allow for separate processing. A maximum of 50 different batches can be created for different types of customer accounts. For example, your customer accounts can be organized as Batch 1 for US-based customers, Batch 2 for EMEA, and Batch 3 for Asia. This gives you the flexibility to select who you want to bill for by running bill runs based on batches. You can also choose to bill batches by payment method such as electronic and external.
 
 Key metrics for customer accounts
-Save as PDF
- 
-Key Metrics Fields
-Balance Examples
 This article provides an overview for each customer account that includes key metrics for the account. With one glance at key metrics, you can see the customer’s Account Balance, Contracted Monthly Recurring Revenue (MRR), Today’s MRR, and Last Invoiced date. If you have enabled the Orders feature, Order metrics are available for each order action. See Key Metrics for Orders for more information.
 
 Key Metrics Fields
@@ -70,15 +61,6 @@ You then create two invoices with invoice amounts of $100 and $200. The total in
 Any payment can be applied to an invoice to reduce the balance of the invoice. This reduces the total invoice balance and the account balance. If you refund from a credit balance to a customer, this reduces the credit balance and increases the account balance, even though the total invoice balance does not change.
 
 Create customer accounts
-Save as PDF
- 
-How to Create Customer Accounts
-Create a Customer Account
-Use SOAP or REST APIs to Create Customer Accounts
-Using a VAT ID
-You can create a customer account from the Zuora application, as well as add bill-to contacts and a default payment method.
-
-Path separators cannot be contained in account names.
 
 How to Create Customer Accounts
 The process of creating a new customer account involves a few easy steps:
@@ -131,30 +113,86 @@ If you are using Avalara, you can specify a European Union Value Added Tax ident
 
 This feature is in Limited Availability. If you want to have access to the feature, submit a request at Zuora Global Support. 
 
-Skip to main content
 EDIT CUSTOMER ACCOUNTS
-Search here
 
 View customer accounts
-Save as PDF
- 
- No headers
 Customer Accounts provides a list of all customers. You can see a high-level summary of each account. This is the expanded view of the list of all your customers. You can switch between expanded and list views. See Expanded and list views of customer accounts.
 
 To view information for an individual account, in the section for that account, click View (or click the account name). 
 
-See the following articles:
-
 Search for customer accounts
-Transactions associated with customer accounts
-Usage for customer accounts
- 
 
-Back to top
-Scrubbed fields in Contacts and Contact Snapshots Search for customer accounts
-Cancel and delete customer accounts
-Save as PDF
- 
+earching for Customer Accounts
+To search for a customer account, navigate to Customers > Customer Accounts and enter your search string, e.g., Soho Plc, into the search box on the right.
+
+There are two search modes: regular search (the default) and filtered search.
+
+Regular Search
+Regular search looks for your search string in all the customer account fields at once. If your search string is found anywhere in a customer account record, that customer is returned in the results. This type of search can return many results, but can take longer to complete than a filtered search. Zuora recommends that you start with a regular search, but if results are slow, try using a filtered search.
+
+To perform a regular search, ensure All is displayed next to the Field label. To change the Field value, click it to show the available options. The Search Type options are unavailable when All is selected.
+
+Filtered Search
+Filtered search looks for your search string in only one specified customer account field, and can, therefore, return results more quickly than a regular search.
+
+To select the specific customer account field that you wish to find your search string in, e.g., Account Name, click the field value next to the Field label, and select one of the following:
+
+Account Name: The customer account name, for example, Soho Plc.
+Account Number: The customer account number, for example, A00001789.
+Name (FirstName LastName): The full name of the customer account, for example, Soho Plc.
+CRM ID: The Account ID of this customer in your CRM system, for example, 0017000000oz2K0.
+Last 4 Digits CC: The last four digits of the customer's credit card, for example, 3403.
+Work Email: The customer's work email address, for example, sally.tompkins@soho.com.
+Work Phone: The customer's work phone number, for example, 555-345-48485.
+Custom Field(s): The values contained in the custom fields that were created on the Account object. This option is only visible if you have 'Custom Field' enabled in your tenant settings.
+Your selected field will be remembered between sessions as the default option for future searches.
+
+Searching for Full Names
+To search for a customer's full name e.g. John Smith you should select Name (FirstName LastName).
+
+The first name is taken to be everything before the first whitespace, and everything after this is taken as the last name. A search is then performed looking for customers whose first name and last names match the separated parts of your search string.
+
+A search string of Robert Louis Stevenson would find all customers with the first name of Robert and the last name of Louis Stevenson.
+A search string of Stevenson Robert Louis would find all customers with the first name of Stevenson and the last name of Robert Louis.
+If a customer's first name contains a white space you must use quote marks to define which words comprise the first name.
+
+A search string of "Robert Louis" Stevenson would find a customer whose first name was Robert Louis and last name was Stevenson.
+A search string of Robert Louis Stevenson would not find a customer whose first name was Robert Louis and last name was Stevenson.
+If only a single word is entered then this will be searched for in both First Name and Last Name fields.
+
+A search string of Robert would find all customers with the first name of Robert, or the last name of Robert, or both.
+Search Type
+Specifying a search type allows you to narrow the range of results your searches generate. To select the search type that you want to use, for example, Starts With, click the highlighted field next to the Type label. 
+
+The Starts With and Exact Match types return fewer, more accurate results in the fastest possible time. We recommend that you use one of these options in your initial search, as results are returned quickly.
+
+The Contains type will return a result if it finds your search string at the beginning, middle or end of an account field. It is the least restrictive search type, and therefore returns more results and runs more slowly than the other two options. We recommend you only use this option if you can't find the customer account using the other two options, and need to widen your search.
+
+Your selected search type will be remembered between sessions as the default option for future searches.
+
+Starts With
+This search operation checks for a match at the beginning of a word. A word is defined by a sequence of alphanumeric or underscore characters, and the end of a word is indicated by white-space or a non-alphanumeric, non-underscore character. The search is not case-sensitive.
+
+For example, to search for a customer account named “Lilypad Gardens,” the following terms will result in a match:
+
+Lilypad Gardens
+Lilypad
+Lilypad G
+Lily
+Gardens
+Searching for the end of a word, such as "dens" in the customer name Lilypad Gardens, will return no results.
+
+Exact Match
+This search operation checks for the exact word(s) you specify in the search string. The search is not case sensitive.
+
+For example, to search for a customer account named “Soho” the following terms will result in a match:
+
+Soho
+soho
+sOhO
+Searching for the beginning of the customer name Soho, such as 'So', or the end of a word such as 'ho', will return no results. Similarly, if searches contain additional words e.g. 'Soho Inc' then no results will be returned.
+
+
 Cancel a customer account
 Delete a Customer Account
 Notes and limitations
@@ -215,343 +253,9 @@ When you import a file, the first row (cell A horizontal) must have a specific s
 
 The column headers for customer accounts, contacts, and payment methods are listed below. 
 
-Customer Accounts
-The following headers are available when you import the customer account information. The headers in bold are required and must have values provided. Also, see here for the required fields. Other headers are optional.
-
-Id: Auto-generated 32-character ID for the account, not the account number. Example: aa1010101d1cf385011d21d4b44d00a0As this field is auto-generated, you do not need to provide any value for this required field.
-Customer Name
-Account Number: Unique number assigned to the account. If configured in Zuora, can be auto-generated and prefixed. Example: CA00001122
-Sold To: If you do not want to update the value of the Sold To contact, do not include this column in the import file.
-Bill To: If you do not want to update the value of the Bill To contact, do not include this column in the import file.
-CRM Account ID
-Auto-Pay
-Default Payment Method: If you do not want to update the value of the Default Payment Method, do not include this column in the import file.
-Payment Term
-PO Number
-Allow Invoice Editing
-Batch
-Bill Cycle Day: To set the bill cycle day automatically, specify Auto-set (case-sensitive) in this column. See Auto-set Option for more information. 
-Invoice Delivery By Email
-Invoice Delivery By Print
-Account Balance
-Currency
-Status
-Description
-Created By
-Updated By
-Created On
-Updated On
-Sales Rep
-CSR
-Last Invoiced
-Notes
-Custom Field
-Required Custom Field
-For Customer Accounts, the following fields are required fields: 
-
-Id
-Customer Name
-Bill Cycle Day
-Required Custom Field
-Customer Contacts
-The following headers are available when you import the customer contact information. The headers in bold are required and must have values provided. Also, see here for the required fields. Other headers are optional.
-
-Id
-First Name
-Last Name
-Nick Name
-Work Email
-Personal Email
-Work Phone
-Mobile Phone
-Home Phone
-Other Phone
-Other Phone Type
-Fax
-Country
-Address 1
-Address 2
-City
-State/Province
-Postal Code
-Customer Account
-Created By
-Updated By
-Created On
-Updated On
-Is Bill To
-Is Sold To
-County
-Tax Region
-Description
-The customer account must have a unique name, that is, the combination of the first name and the last name. If a customer already has a contact with that name, subsequent contact records with the same name are rejected as duplicates even if other column values are different. When duplicates occur, the message saying "Contact already exists with this name <first+' '+last>. Are you sure you want to save?" is displayed. This message is only informational. If multiple contacts are rejected during the import, the message might appear multiple times in the result. To solve this problem, the indicated contacts must be manually entered, created with the SOAP contact object, or imported again after you can change the names to avoid collisions. It is highly recommended to check for duplicated names before you import the file of contacts.
-The Customer Account is the account ID of the customer. This column is required to import the contact information. To obtain the appropriate customer account IDs for contacts, export the customer accounts that you previously imported by clicking Export Customer Accounts. In the exported CSV file, do a lookup to combine the contacts with the customer account IDs.
-(Zuora Tax users only) Although the country column is not required by the import, using Zuora Tax requires that sold-to contacts must include a country and a state or province, if the country is USA or Canada.
-For Customer Contacts, the following fields are required fields:
-
-First Name
-Last Name
-Customer Account
-Payment Method
-The following headers are available when you import the customer contact information. The headers in bold are required and must have values provided. Also, see here for the required fields. Other headers are optional.
-
-Id 
-Customer Account
-Payment Method Type
-Credit Card Type
-Credit Card Number
-Bank Identification Number
-Expiration Year
-Expiration Month
-Credit Card Holder Name
-Credit Card Address1
-Credit Card Address2
-Credit Card Country
-Credit Card State
-Credit Card City
-Credit Card Postal Code
-Last Transaction
-Last Transaction Time
-Created By
-Updated By
-Created On
-Updated On
-Is Default
-Consecutive Failed Payments
-Status
-Email
-Phone
-For Payment Method, the following fields are required fields:
-
-Customer Account
-Payment Method Type
-Using the Zuora UI Template for the Account and Contact Combiner
-The following tables show the mapping relationship between the headers in the template that is downloaded from the Zuora Billing UI and the fields in the template for the Account and Contact API loader. 
-
-Account's fields from the UI template	Fields in the template for the Account and Contact loader
-Id
-
-(used to associated the two files)
-
-Customer Name
-
-Account Name
-
-Account Number
-
-Account Number
-
-Sold To
-
-N/A
-
-Bill To
-
-N/A
-CRM Account ID
-
-CRM Account ID
-
-Auto-Pay
-
-N/A
-Default Payment Method
-
-N/A
-Payment Term
-
-Payment Term
-
-PO Number
-
-PO Number
-
-Allow Invoice Editing
-
-Allow Invoice Editing
-
-Batch
-
-Batch
-
-Bill Cycle Day
-
-Bill Cycle Day
-
-Invoice Delivery By Email
-
-Invoice Delivery By Email
-
-Invoice Delivery By Print
-
-Invoice Delivery By Print
-
-Account Balance
-
-N/A
-Currency
-
-Currency
-
-Status
-
-Status
-
-Description
-
-N/A
-Created By
-
-N/A
-Updated By
-
-N/A
-Created On
-
-N/A
-Updated On
-
-N/A
-Sales Rep
-
-Sales Rep
-
-CSR
-
-CSR
-
-Last Invoiced
-
-N/A
-Notes
-
-Notes
-
-Payment Gateway
-
-Payment Gateway
-
-Parent
-
-Parent Account ID
-
-Ultimate Parent
-
-N/A
- 
-
-Contact's fields from UI's template	Fields in template for  AC loader
-Id
-
-N/A
-First Name
-
-First Name
-
-Last Name
-
-Last Name
-
-Nick Name
-
-Nick Name
-
-Work Email
-
-Work Email
-
-Personal Email
-
-Personal Email
-
-Work Phone
-
-Work Phone
-
-Mobile Phone
-
-Mobile Phone
-
-Home Phone
-
-Home Phone
-
-Other Phone
-
-Other Phone
-
-Other Phone Type
-
-Other Phone Type
-
-Fax
-
-Fax
-
-Country
-
-Country
-
-Address 1
-
-Address 1
-
-Address 2
-
-Address 2
-
-City
-
-City
-
-State/Province
-
-State Province
-
-Postal Code
-
-Postal Code
-
-Customer Account
-
-(used to associated the two files)
-
-Created By
-
-N/A
-Updated By
-
-N/A
-Created On
-
-N/A
-Updated On
-
-N/A
-Is Bill To
-
-Is Bill To
-
-Is Sold To
-
-Is Sold To
-
-County
-
-County
-
-Tax Region
-
-Tax Region
-
-Description
-
-Contact Description
 
 Run report of actively billed customer accounts
-Save as PDF
- 
- No headers
+
 Note that the Account object in Zuora has its own ‘Status’ field, of which one possible status is ‘Active’. Zuora sets the status of an Account to Active once created regardless if there is a subscription or not. Listing Accounts by account status may include accounts that are yet to bill or have finished billing at some time in the past. Therefore, to view "active customers", Zuora recommends listing the customer accounts that have subscriptions actively billed.
 
 To get a list of customers that are being actively billed, run the Zuora standard "MRR by Account" report:
@@ -561,5 +265,3 @@ Navigate to Standard Reports > Booking > Drivers.
 Navigate to MRR by account, and click the down arrow next to Run Detail Report.
 In the expanded drop-down menu, click Run Summary Report.
 A list of all customers you are actively billing will be displayed grouped by Currency.
-
-See the video Make Sense of Standard Report for how to customize a Zuora report if you are to customize the report. 
