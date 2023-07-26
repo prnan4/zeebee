@@ -1,21 +1,565 @@
-Create a custom object as the lookup table
-To create a custom object through the Zuora UI, complete the following steps:
+Overview of customer accounts
+Save as PDF
+ 
+Customer Hierarchy 
+Reseller Account
+Importing Accounts
+Grouping Accounts for Batch Processing
+For each account, you can view the complete history of all subscriptions and amendments, transactions (including invoices, payments, refunds, credits, adjustments), and key metrics (for example, monthly recurring revenue) for that customer. Key actions can be easily launched from the Customer Accounts page, including the ability to cancel or delete a customer account, create new subscriptions, process payments and refunds, adjust invoice charges, and create invoice item adjustments. Many of these actions can be found by clicking on the more button on the customer account page.
 
-In the left-hand navigation section, navigate to Platform > Custom Objects.
-Click + CREATE CUSTOM OBJECT.
-On the Custom Objects page that is displayed, configure the lookup table definition: 
-In the NAME field, enter the UI element name for the new custom object. In this scenario, enter CarRental.
-In the API NAME field, enter an API label name for the custom object. In this scenario, enter CarRental.
-The API label name will be used later, so note it for reference.
-In the Custom Fields area, click + NEW CUSTOM FIELD.
-In the Custom Field dialog that is displayed, complete the following configurations:
-In the custom fields overview area, enter the UI element name for the new custom field in the NAME field. In this scenario, enter type.
-The value in the API NAME field is automatically populated based on the specified field name. In this scenario, type__c is automatically displayed. The API Name of the field will also be used later.
-In the Details area, select Text from the FIELD TYPE list.
-Switch the Filterable toggle on to ensure that the custom field is filterable.
-It is best practice to also switch the Required on if you need to use the custom field in the price formula later. 
-Click SAVE to save the custom field configurations.
-Repeat steps 4 and 5 to create the state and multiplier custom fields.
-When creating the multiplier custom field, you have to select Number from the FIELD TYPE list.
-Click SAVE to save the custom object configurations.
-The definition of the lookup table called CarRental is now created, with the type, state, and multiplier fields
+Customer Hierarchy 
+The Customer Hierarchy feature allows you to select a parent record in the customer account. You can use this with both existing customers (view the account and edit it to add a parent) and when creating a new customer account.
+
+To enable this feature, set the Enable Customer Hierarchy? billing rule to Yes.
+
+A parent-child relationship is not required for most accounts, and this should be configured only when needed.
+
+Typically, Zuora users use customer hierarchy for one of these two cases: 
+
+To arrange billing accounts in a hierarchy: This is for organizational purposes. 
+To roll up usage: You can use customer hierarchy to roll up usage from child to parent accounts. 
+In the Zuora UI, you can navigate customer hierarchy by clicking the Navigate Hierarchy link next to the account name in the Customer Accounts page.
+
+In the SOAP API, you can navigate parent account with the ParentId field on the Account object.
+
+Reseller Account
+The Reseller Account feature is now generally available to all customers. If you want to access this feature, submit a request at Zuora Global Support.
+
+With this feature, you can flag an account as a partner account by specifying the partnerAccount field on the Account object. This feature is designed specifically for businesses that have distributors or resellers, or operate in B2B model with a large number of subscriptions.
+
+If an account is flagged as a partner account, the calculation of account metrics is performed asynchronously during operations such as subscription creation, order changes, invoice generation, and payments. This means that the calculation of metrics is delayed for partner accounts.
+
+For more information, see Reseller Account.
+
+Importing Accounts
+If you already have a list of your customers from another database (for example, Salesforce.com, Excel, QuickBooks, or another source), you can quickly enter data in our system by importing your customer accounts.
+
+See Importing Customer Accounts for detailed instructions.
+
+Grouping Accounts for Batch Processing
+You can use Batches to easily group your customer accounts in order to allow for separate processing. A maximum of 50 different batches can be created for different types of customer accounts. For example, your customer accounts can be organized as Batch 1 for US-based customers, Batch 2 for EMEA, and Batch 3 for Asia. This gives you the flexibility to select who you want to bill for by running bill runs based on batches. You can also choose to bill batches by payment method such as electronic and external.
+
+Key metrics for customer accounts
+Save as PDF
+ 
+Key Metrics Fields
+Balance Examples
+This article provides an overview for each customer account that includes key metrics for the account. With one glance at key metrics, you can see the customer’s Account Balance, Contracted Monthly Recurring Revenue (MRR), Today’s MRR, and Last Invoiced date. If you have enabled the Orders feature, Order metrics are available for each order action. See Key Metrics for Orders for more information.
+
+Key Metrics Fields
+Field	Description
+Account Balance	
+The outstanding balance for the customer, and is the sum of all outstanding invoices and debit memos. The debit memos are only available if you have the Invoice Settlement feature enabled.
+
+Total Invoice Balance	The sum of the balances of each individual invoice. 
+Credit Balance	The customer's current credit balance. This field is deprecated if you have the Invoice Settlement feature enabled.
+Total Debit Memo Balance	The total outstanding balance of debit memos for the customer. 
+Unapplied Credit Memo Amount	The amount of a credit memo that has been created, but not used to settle or offset an invoice balance or a debit memo balance.
+Unapplied Payment Amount	The amount of a payment that you have received but has not yet applied to any invoices or debit memos. 
+Contracted MRR (CMRR)	There are account-level CMRR and subscription-level CMRR. See Contracted MRR for more information.
+Today's MRR	The current monthly recurring revenue as of today’s date. Today’s MRR does not account for future upgrades, downgrades, upsells, or cancellations.
+Total MRR	The sum of CMRRs of all the subscriptions owned by an account.
+Last Invoiced	The date the customer was last invoiced.
+See Monthly Recurring Revenue for more information about MRR and how to calculate it. Also see Total Contract Value, a related key metric. 
+
+Balance Examples
+For example: You pay $50 into an account that has no invoice. The credit balance of account is $50, the total invoice balance is $0, and the account balance is -$50 (negative $50).
+
+You then create two invoices with invoice amounts of $100 and $200. The total invoice balance is now $300, the credit balance is still $50, and the account balance is $250 ($300 invoice balance, minus the $50 credit balance).
+
+Any payment can be applied to an invoice to reduce the balance of the invoice. This reduces the total invoice balance and the account balance. If you refund from a credit balance to a customer, this reduces the credit balance and increases the account balance, even though the total invoice balance does not change.
+
+Create customer accounts
+Save as PDF
+ 
+How to Create Customer Accounts
+Create a Customer Account
+Use SOAP or REST APIs to Create Customer Accounts
+Using a VAT ID
+You can create a customer account from the Zuora application, as well as add bill-to contacts and a default payment method.
+
+Path separators cannot be contained in account names.
+
+How to Create Customer Accounts
+The process of creating a new customer account involves a few easy steps:
+
+Enter the Basic Information and Contacts. Each account must have at least one contact before it can be saved. You can add a maximum of 100 contacts to an account.
+Enter the Payment Method. You can add a maximum of 100 payment methods to an account.
+Enter the Billing and Payment Info.
+Optional. Complete the Additional Fields with additional account information.
+Create a Customer Account
+When you create an account, provide as much detail as possible so that you can bill correctly. Strive for accurate and consistent spelling of a corporate name if it is a company. Your billing customer database is only as good as the data being entered into the system.
+
+Navigate to Customers > Customer Accounts in the left-hand navigation section and click add new account.
+Enter the Basic Information and Contacts for the account. You can add a maximum of 100 contacts to an account.
+If you select the Same as Bill To Contact check box during account creation, both the Bill To and Sold To contacts are updated upon updating either one because they are pointing to the same contact record. In this case, if you want to update only one of them, you have to first create another contact and update the Bill To or Sold To contact of the customer account to be the newly created one.
+
+Optional. Select a Parent account if you want to create a hierarchy of customer accounts and use Zuora's enterprise billing features.
+Specify the Account Name and Bill To Contact First and Last Name. A valid email address is required if you want to send an invoice by email. The contact record contains information that you will need to keep and use for billing. A contact is linked to a customer account.
+If you are using another system that uses a name match for integration (for example, QuickBooks for accounting), the Name for your account must match the name for the account in your other system. Accounting systems have the following character limits for account names:
+QuickBooks® Desktop: 41 characters or fewer
+QuickBooks® Online: 100 characters or fewer
+Intacct: 100 characters or fewer
+Enter the Payment Method. You can add a maximum of 100 payment methods to an account.
+Enter the Billing and Payment Information.
+Click Additional Fields to include more information about your customer account, such as:
+Account Number
+CRM Account ID
+Sales Rep
+CSR
+PO Number
+Billing Batch
+Invoice Template
+Sequence Set
+Allow Invoice Editing
+Invoice Delivery Preferences
+Additional Email Addresses
+Credit Memo Template (This feature is in Limited Availability.)
+Debit Memo Template (This feature is in Limited Availability.)
+CRM Account ID, Sales Rep, CSR, and Notes are some of the many the fields that can be used to map information between your web site, SFA (Salesforce Automation), or CRM (customer relationship management) software and Zuora Billing. If you do not enter an account number, Zuora Billing assigns an account number that is unique to the account.
+
+You can organize your customer accounts in batches, such as Batch 1 for US-based customers, Batch 2 for EMEA, and Batch 3 for Asia. When you set up Billing Operations, this gives you the flexibility of running bill runs based on batches. You can also choose from a list of default payment methods, including both electronic and external payment methods.
+
+Click save. The customer account is saved with an active status. You can create subscriptions for this account and start charging them for your products or services.
+Use SOAP or REST APIs to Create Customer Accounts
+See SOAP API Account object.
+
+See REST API Create Account method.
+
+Using a VAT ID
+If you are using Avalara, you can specify a European Union Value Added Tax identification number for a customer account. To add an EU VAT ID to a customer account, enter an identification number in the VAT ID field when you create the customer account.
+
+This feature is in Limited Availability. If you want to have access to the feature, submit a request at Zuora Global Support. 
+
+Skip to main content
+EDIT CUSTOMER ACCOUNTS
+Search here
+
+View customer accounts
+Save as PDF
+ 
+ No headers
+Customer Accounts provides a list of all customers. You can see a high-level summary of each account. This is the expanded view of the list of all your customers. You can switch between expanded and list views. See Expanded and list views of customer accounts.
+
+To view information for an individual account, in the section for that account, click View (or click the account name). 
+
+See the following articles:
+
+Search for customer accounts
+Transactions associated with customer accounts
+Usage for customer accounts
+ 
+
+Back to top
+Scrubbed fields in Contacts and Contact Snapshots Search for customer accounts
+Cancel and delete customer accounts
+Save as PDF
+ 
+Cancel a customer account
+Delete a Customer Account
+Notes and limitations
+If a customer cancels their subscription and is no longer billed for services, the customer account can be canceled. A customer account can be set to cancelled status only after all subscriptions have been canceled. A customer account that has been canceled can be re-activated if needed.
+
+Cancel a customer account
+Before you can cancel a customer account, you must cancel all subscriptions associated with that account (you must cancel active and draft subscriptions). When a customer account is canceled, Zuora will not perform any transactions on that account: 
+
+Zuora will not generate invoices for canceled accounts
+You cannot apply payments for canceled accounts
+To cancel a customer account, complete the following steps:
+
+Navigate to Customers > Customer Accounts in the left-hand navigation.
+Locate the customer account that you want to cancel.
+Click the name of the customer account to open the account detail page.
+Click the three vertical dots icon to show more applicable actions, then click Cancel Customer Account.
+Click OK to confirm the action.
+If you later want to reactivate the account, click Reactivate Customer Account on the account detail page. 
+
+Delete a Customer Account
+Navigate to Customers > Customer Accounts in the left-hand navigation to view the existing accounts.
+Locate the target account and click the Delete icon on the right side of the row.
+Click Delete to confirm the action.
+Deleting an account deletes all account information, including subscriptions, invoices, payments, and adjustments.
+
+Notes and limitations
+For account deletion, the system will start a backend job to remove all transactions under the accounts and change the status of the accounts to Canceled. This backend job is asynchronous and will take some time, depending on the job size.    
+An account cannot be deleted when both of the following conditions are met:
+The account is either the invoice owner of a subscription or the subscription owner.
+The subscription's invoice owner and subscription owner are two different accounts.
+An exception to this limitation above is if the Enable force deletion for Account? setting is set to Yes, you can force delete an account that is the subscription owner of a subscription while the invoice owner is a different account. Force deleting this account deletes all its subscriptions, but the relevant invoices will not be impacted.
+
+Import customer accounts
+Save as PDF
+ 
+Importing Customer Accounts
+Required Column Headers
+Customer Accounts
+Customer Contacts
+Payment Method
+Using the Zuora UI Template for the Account and Contact Combiner
+If you already have a list of your customers from another database (for example, Salesforce.com, Excel, QuickBooks, or another source), you can quickly enter data in Zuora system by importing all your customer accounts as a CSV file.
+
+Importing Customer Accounts
+To import your customer accounts, perform the following steps:
+
+Navigate to Customers > Customer Accounts.
+On the right side of the All Customer Accounts page, select Customer Accounts from the Import list under the Action section.
+Click Choose File to select the CSV file that you want to import.
+Click submit to import data from the selected file.
+The imported customer accounts will show up on the All Customer Accounts page.
+
+If you are not sure about the column headers in the CSV file, click Download a Template to get the templates for customer accounts, contacts, and payment methods. These templates contain all available column headers. For the required columns, refer to Required Column Headers. 
+Characters in languages other than English might be garbled. If it happens, save the CSV file in UTF-8 without BOM encoding and import the file again.
+You can also use the same way to import contacts and payment methods. Remember that the customer account ID is required for each contact and each payment method. To obtain the appropriate customer account IDs for contacts and payment methods, export the customer accounts that you previously imported by clicking Export Customer Accounts. In the exported CSV file, do a lookup to combine the contacts and payment methods with the customer account IDs.
+Required Column Headers
+When you import a file, the first row (cell A horizontal) must have a specific set of headers.
+
+The column headers for customer accounts, contacts, and payment methods are listed below. 
+
+Customer Accounts
+The following headers are available when you import the customer account information. The headers in bold are required and must have values provided. Also, see here for the required fields. Other headers are optional.
+
+Id: Auto-generated 32-character ID for the account, not the account number. Example: aa1010101d1cf385011d21d4b44d00a0As this field is auto-generated, you do not need to provide any value for this required field.
+Customer Name
+Account Number: Unique number assigned to the account. If configured in Zuora, can be auto-generated and prefixed. Example: CA00001122
+Sold To: If you do not want to update the value of the Sold To contact, do not include this column in the import file.
+Bill To: If you do not want to update the value of the Bill To contact, do not include this column in the import file.
+CRM Account ID
+Auto-Pay
+Default Payment Method: If you do not want to update the value of the Default Payment Method, do not include this column in the import file.
+Payment Term
+PO Number
+Allow Invoice Editing
+Batch
+Bill Cycle Day: To set the bill cycle day automatically, specify Auto-set (case-sensitive) in this column. See Auto-set Option for more information. 
+Invoice Delivery By Email
+Invoice Delivery By Print
+Account Balance
+Currency
+Status
+Description
+Created By
+Updated By
+Created On
+Updated On
+Sales Rep
+CSR
+Last Invoiced
+Notes
+Custom Field
+Required Custom Field
+For Customer Accounts, the following fields are required fields: 
+
+Id
+Customer Name
+Bill Cycle Day
+Required Custom Field
+Customer Contacts
+The following headers are available when you import the customer contact information. The headers in bold are required and must have values provided. Also, see here for the required fields. Other headers are optional.
+
+Id
+First Name
+Last Name
+Nick Name
+Work Email
+Personal Email
+Work Phone
+Mobile Phone
+Home Phone
+Other Phone
+Other Phone Type
+Fax
+Country
+Address 1
+Address 2
+City
+State/Province
+Postal Code
+Customer Account
+Created By
+Updated By
+Created On
+Updated On
+Is Bill To
+Is Sold To
+County
+Tax Region
+Description
+The customer account must have a unique name, that is, the combination of the first name and the last name. If a customer already has a contact with that name, subsequent contact records with the same name are rejected as duplicates even if other column values are different. When duplicates occur, the message saying "Contact already exists with this name <first+' '+last>. Are you sure you want to save?" is displayed. This message is only informational. If multiple contacts are rejected during the import, the message might appear multiple times in the result. To solve this problem, the indicated contacts must be manually entered, created with the SOAP contact object, or imported again after you can change the names to avoid collisions. It is highly recommended to check for duplicated names before you import the file of contacts.
+The Customer Account is the account ID of the customer. This column is required to import the contact information. To obtain the appropriate customer account IDs for contacts, export the customer accounts that you previously imported by clicking Export Customer Accounts. In the exported CSV file, do a lookup to combine the contacts with the customer account IDs.
+(Zuora Tax users only) Although the country column is not required by the import, using Zuora Tax requires that sold-to contacts must include a country and a state or province, if the country is USA or Canada.
+For Customer Contacts, the following fields are required fields:
+
+First Name
+Last Name
+Customer Account
+Payment Method
+The following headers are available when you import the customer contact information. The headers in bold are required and must have values provided. Also, see here for the required fields. Other headers are optional.
+
+Id 
+Customer Account
+Payment Method Type
+Credit Card Type
+Credit Card Number
+Bank Identification Number
+Expiration Year
+Expiration Month
+Credit Card Holder Name
+Credit Card Address1
+Credit Card Address2
+Credit Card Country
+Credit Card State
+Credit Card City
+Credit Card Postal Code
+Last Transaction
+Last Transaction Time
+Created By
+Updated By
+Created On
+Updated On
+Is Default
+Consecutive Failed Payments
+Status
+Email
+Phone
+For Payment Method, the following fields are required fields:
+
+Customer Account
+Payment Method Type
+Using the Zuora UI Template for the Account and Contact Combiner
+The following tables show the mapping relationship between the headers in the template that is downloaded from the Zuora Billing UI and the fields in the template for the Account and Contact API loader. 
+
+Account's fields from the UI template	Fields in the template for the Account and Contact loader
+Id
+
+(used to associated the two files)
+
+Customer Name
+
+Account Name
+
+Account Number
+
+Account Number
+
+Sold To
+
+N/A
+
+Bill To
+
+N/A
+CRM Account ID
+
+CRM Account ID
+
+Auto-Pay
+
+N/A
+Default Payment Method
+
+N/A
+Payment Term
+
+Payment Term
+
+PO Number
+
+PO Number
+
+Allow Invoice Editing
+
+Allow Invoice Editing
+
+Batch
+
+Batch
+
+Bill Cycle Day
+
+Bill Cycle Day
+
+Invoice Delivery By Email
+
+Invoice Delivery By Email
+
+Invoice Delivery By Print
+
+Invoice Delivery By Print
+
+Account Balance
+
+N/A
+Currency
+
+Currency
+
+Status
+
+Status
+
+Description
+
+N/A
+Created By
+
+N/A
+Updated By
+
+N/A
+Created On
+
+N/A
+Updated On
+
+N/A
+Sales Rep
+
+Sales Rep
+
+CSR
+
+CSR
+
+Last Invoiced
+
+N/A
+Notes
+
+Notes
+
+Payment Gateway
+
+Payment Gateway
+
+Parent
+
+Parent Account ID
+
+Ultimate Parent
+
+N/A
+ 
+
+Contact's fields from UI's template	Fields in template for  AC loader
+Id
+
+N/A
+First Name
+
+First Name
+
+Last Name
+
+Last Name
+
+Nick Name
+
+Nick Name
+
+Work Email
+
+Work Email
+
+Personal Email
+
+Personal Email
+
+Work Phone
+
+Work Phone
+
+Mobile Phone
+
+Mobile Phone
+
+Home Phone
+
+Home Phone
+
+Other Phone
+
+Other Phone
+
+Other Phone Type
+
+Other Phone Type
+
+Fax
+
+Fax
+
+Country
+
+Country
+
+Address 1
+
+Address 1
+
+Address 2
+
+Address 2
+
+City
+
+City
+
+State/Province
+
+State Province
+
+Postal Code
+
+Postal Code
+
+Customer Account
+
+(used to associated the two files)
+
+Created By
+
+N/A
+Updated By
+
+N/A
+Created On
+
+N/A
+Updated On
+
+N/A
+Is Bill To
+
+Is Bill To
+
+Is Sold To
+
+Is Sold To
+
+County
+
+County
+
+Tax Region
+
+Tax Region
+
+Description
+
+Contact Description
+
+Run report of actively billed customer accounts
+Save as PDF
+ 
+ No headers
+Note that the Account object in Zuora has its own ‘Status’ field, of which one possible status is ‘Active’. Zuora sets the status of an Account to Active once created regardless if there is a subscription or not. Listing Accounts by account status may include accounts that are yet to bill or have finished billing at some time in the past. Therefore, to view "active customers", Zuora recommends listing the customer accounts that have subscriptions actively billed.
+
+To get a list of customers that are being actively billed, run the Zuora standard "MRR by Account" report:
+
+Navigate to Reporting > Reporting in Zuora.
+Navigate to Standard Reports > Booking > Drivers.
+Navigate to MRR by account, and click the down arrow next to Run Detail Report.
+In the expanded drop-down menu, click Run Summary Report.
+A list of all customers you are actively billing will be displayed grouped by Currency.
+
+See the video Make Sense of Standard Report for how to customize a Zuora report if you are to customize the report. 
