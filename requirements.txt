@@ -8,3 +8,4 @@ toml
 chromadb
 faiss-cpu
 pypdf
+tiktoken
